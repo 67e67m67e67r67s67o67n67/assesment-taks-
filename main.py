@@ -1,17 +1,9 @@
 import os
 import pandas as pd
 
-
 df = pd.read_csv(r"C:\Users\Emers\OneDrive\Desktop\datattaaaaaaaaaaaaaaa.csv")
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
-
-
-
-
-
-
-
 
 def quitFunction():
     quitChoice = input("Are you sure you want to quit?(Y/N):").strip().upper()
@@ -40,11 +32,9 @@ def searchData():
 
     searchValue = input("Enter search value: ").strip()
     columnName = validSearch[searchType]
-
+    os.system('cls')
     
-
     if searchType == "year":
-
         try:
             searchValue = int(searchValue)
         except ValueError:
@@ -55,9 +45,7 @@ def searchData():
         result = df[df[columnName] == searchValue]
 
     else:
-
-        result = df[df[columnName].astype(str).str.lower().str.contains(searchValue.lower(), na=False)
-]
+        result = df[df[columnName].astype(str).str.lower().str.contains(searchValue.lower(), na=False)]
 
     if result.empty:
         print("No matching data found.")
@@ -67,12 +55,6 @@ def searchData():
         print(result)
 
     input("\nPress Enter to continue")   
-
-    
-
-
-
-    
 
 def mainMenu():
     while True:
@@ -157,7 +139,4 @@ Disaster types include:
             print("Error, please try again")
             input("Press any key to continue:")
 
-
 mainMenu()
-        
-
