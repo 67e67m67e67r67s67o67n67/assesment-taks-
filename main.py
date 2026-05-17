@@ -4,7 +4,7 @@ import pandas as pd
 
 df = pd.read_csv(r"C:\Users\Emers\OneDrive\Desktop\datattaaaaaaaaaaaaaaa.csv")
 pd.set_option('display.max_rows', None)
-
+pd.set_option('display.max_columns', None)
 
 
 
@@ -14,12 +14,12 @@ pd.set_option('display.max_rows', None)
 
 
 def quitFunction():
-    quitChoice = input("Are you sure you want to quit?(Y/N):")
+    quitChoice = input("Are you sure you want to quit?(Y/N):").strip().upper()
     if quitChoice == 'Y':
         print("Quitting program")
         raise SystemExit
     elif quitChoice == 'N':
-        mainMenu()
+        return
     else:
         print("Error, please try again")
         input("Press any key to continue:")
@@ -38,23 +38,26 @@ def searchData():
         input("Press Enter to continue")
         return
 
-    searchType = input("Enter search value: ").strip()
+    searchValue = input("Enter search value: ").strip()
     columnName = validSearch[searchType]
+
+    
 
     if searchType == "year":
 
         try:
-            searchType = int(searchType)
+            searchValue = int(searchValue)
         except ValueError:
             print("Year must be a number.")
             input("Press Enter to continue:")
             return
 
-        result = df[df[columnName] == searchType]
+        result = df[df[columnName] == searchValue]
 
     else:
 
-        result = df[df[columnName].astype(str).str.lower() == searchType.lower()]
+        result = df[df[columnName].astype(str).str.lower().str.contains(searchValue.lower(), na=False)
+]
 
     if result.empty:
         print("No matching data found.")
