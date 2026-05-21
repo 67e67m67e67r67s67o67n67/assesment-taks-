@@ -1,7 +1,8 @@
 import os
 import pandas as pd
+import matplotlib.pyplot as plt 
 
-df = pd.read_csv(r"C:\Users\Emers\OneDrive\Desktop\datattaaaaaaaaaaaaaaa.csv")
+df = pd.read_csv(r"datattaaaaaaaaaaaaaaa.csv")
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 
@@ -67,7 +68,8 @@ def mainMenu():
 What would you like do to?      
     Option 1: Search data set
     Option 2: View instructions
-    Option 3: Quit      
+    Option 3: View visualisations
+    Option 4: Quit      
               
 ==============================================================              
 """)
@@ -134,6 +136,108 @@ Disaster types include:
             input("Press any key to continue:")
 
         elif choice == '3':
+            os.system('cls')
+            print("""
+==============================================================                   
+                     Visualisation Menu
+==============================================================                   
+What would you like to view a visualisation on?
+    Option 1: Disasters by year
+    Option 2: Deaths by disaster
+    Option 3: Damage by country
+    Option 4: Disasters by country
+                      
+==============================================================                    
+                  """)
+            v = input("What would you like to view?: ")
+            
+            if v == '1':
+                disasterYear = (
+                    df.groupby(['Year', 'Disaster'])
+                    .size()
+                    .unstack(fill_value=0)
+                )
+
+                disasterYear.plot(figsize=(12, 6))
+
+                plt.title("Disaster Types Over Time")
+                plt.xlabel("Year")
+                plt.ylabel("Number of Disasters")
+
+                plt.tight_layout()
+                plt.show()
+
+                input("Press any key to continue:")
+
+            elif v == '2':
+                deathsByDisaster = (
+                    df.groupby('Disaster')['Deaths']
+                    .sum()
+                    .sort_values(ascending=False)
+                    .head(10)
+                )
+
+                deathsByDisaster.plot(kind='bar')
+
+                plt.title("Top 10 Deadliest Disaster Types")
+                plt.xlabel("Disaster Type")
+                plt.ylabel("Total Deaths")
+
+                plt.xticks(rotation=45)
+
+                plt.tight_layout()
+                plt.show()
+
+                input("Press any key to continue:")
+
+            elif v == '3':
+                damageByCountry = (
+                    df.groupby('Country')['Damages (Adjusted USD)']
+                    .sum()
+                    .sort_values(ascending=False)
+                    .head(10)
+                )
+
+                damageByCountry.plot(kind='bar')
+
+                plt.title("Countries with Highest Damage Costs")
+                plt.xlabel("Country")
+                plt.ylabel("Total Damage Cost")
+
+                plt.xticks(rotation=45)
+
+                plt.tight_layout()
+                plt.show()
+
+                input("Press any key to continue:")
+
+            elif v == '4':
+                disastersByCountry = (
+                    df.groupby('Country')
+                    .size()
+                    .sort_values(ascending=False)
+                    .head(10)
+                )
+
+                disastersByCountry.plot(kind='bar')
+
+                plt.title("Countries with Most Disasters")
+                plt.xlabel("Country")
+                plt.ylabel("Number of Disasters")
+
+                plt.xticks(rotation=45)
+
+                plt.tight_layout()
+                plt.show()
+
+                input("Press any key to continue:")
+
+            else:
+                print("Error, please try again")
+                input("Press any key to continue:")
+
+
+        elif choice == '4':
            quitFunction()
         else:
             print("Error, please try again")
