@@ -1,3 +1,5 @@
+
+#import libraries
 import os
 import pandas as pd
 import matplotlib.pyplot as plt 
@@ -6,6 +8,7 @@ df = pd.read_csv(r"datattaaaaaaaaaaaaaaa.csv")
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 
+#function to quit the program
 def quitFunction():
     quitChoice = input("Are you sure you want to quit?(Y/N):").strip().upper()
     if quitChoice == 'Y':
@@ -17,6 +20,7 @@ def quitFunction():
         print("Error, please try again")
         input("Press any key to continue:")
 
+#search function for my data
 def searchData():
     searchType = input("What would you like to search by? (Disaster/Year/Country): ").strip().lower()
     
@@ -34,7 +38,7 @@ def searchData():
     searchValue = input("Enter search value: ").strip()
     columnName = validSearch[searchType]
     os.system('cls')
-    
+
     if searchType == "year":
         try:
             searchValue = int(searchValue)
@@ -75,8 +79,12 @@ What would you like do to?
 """)
         choice = input("Enter choice: ")
         os.system('cls')
+
+        #calls the fuction to search teh date
         if choice == '1':
             searchData()
+
+        #prints instructions
         elif choice == '2':
             print("""
 ==============================================================     
@@ -135,6 +143,7 @@ Disaster types include:
 """)
             input("Press any key to continue:")
 
+        #asks user what visualisation they want to view then shows it
         elif choice == '3':
             os.system('cls')
             print("""
@@ -236,9 +245,11 @@ What would you like to view a visualisation on?
                 print("Error, please try again")
                 input("Press any key to continue:")
 
-
+        #quits the program after confirmation
         elif choice == '4':
            quitFunction()
+        
+        #prints an error if somethin incorrect has been entered
         else:
             print("Error, please try again")
             input("Press any key to continue:")
